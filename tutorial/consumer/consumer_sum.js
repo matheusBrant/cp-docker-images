@@ -6,7 +6,7 @@ var valueSum = 0;
 const consumer = new Kafka.SimpleConsumer({"connectionString":"127.0.0.1:9092"})
 var data = function (messageSet) {
     messageSet.forEach(function (m) {
-        var value = parseInt(m.message.value.toString('utf8'));
+        var value = parseInt(m.message.value.toJson('utf8'));
         valueSum = valueSum + value;
         console.log(valueSum);
     });

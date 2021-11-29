@@ -6,10 +6,10 @@ from datetime import datetime
 import pandas as pd
 import numpy as np
 
-d = open('forest_fire.json')
-
-print(d)
-
+df = pd.read_json('forest_fire.json')
+print(df)
+js = df.to_json(orient = 'columns')
+print(js)
 # Create an instance of the Kafka producer
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
                             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
@@ -17,7 +17,7 @@ producer = KafkaProducer(bootstrap_servers='localhost:9092',
 # Call the producer.send method with a producer-record
 print("Ctrl+c to Stop")
 while True:
-    producer.send('python-topic-1', random.randint(1,999))
+    producer.send('python-topic-1', js)
 
 # sudo docker-compose up -d
 # sudo docker-compose ps
