@@ -1,9 +1,14 @@
-from kafka import KafkaProducer
+from kafka import KafkaProducer, KafkaConsumer, KafkaClient
 import json
 import random
 from time import sleep
 from datetime import datetime
-from kafka import KafkaConsumer
+import pandas as pd
+import numpy as np
+
+d = open('forest_fire.json')
+
+print(d)
 
 # Create an instance of the Kafka producer
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
@@ -19,3 +24,5 @@ while True:
 # -- create topic --
 # sudo docker-compose exec kafka \
 # kafka-topics --create --topic kafka-python-topic --partitions 1 --replication-factor 1 --bootstrap-server localhost:9092
+"""virtualenv -p python3 .env3
+source .env3/bin/activate"""
