@@ -5,11 +5,16 @@ from time import sleep
 from datetime import datetime
 import pandas as pd
 import numpy as np
+import time
+
 
 df = pd.read_json('forest_fire.json')
 print(df)
-js = df.to_json(orient = 'columns')
-print(js)
+js = df.to_json()
+obj = json.loads(js)
+
+id = obj['id']
+
 # Create an instance of the Kafka producer
 producer = KafkaProducer(bootstrap_servers='localhost:9092',
                             value_serializer=lambda v: json.dumps(v).encode('utf-8'))
@@ -18,7 +23,8 @@ producer = KafkaProducer(bootstrap_servers='localhost:9092',
 print("Ctrl+c to Stop")
 while True:
     producer.send('python-topic-1', js)
-
+    time.sleep(10)
+    print("BEEP BEEP")
 # sudo docker-compose up -d
 # sudo docker-compose ps
 # -- create topic --
